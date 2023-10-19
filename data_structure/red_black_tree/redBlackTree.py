@@ -28,22 +28,19 @@ class RedBlackTree:
         self.__inorder_traversal_color(self.root, result)
         return result
 
-    def __find_data(self, root, data) -> Node | None:
-        if root is None or root.data == data:
-            # return None or 데이터가 포함되어져있는 노드
-            return root
-        elif root.data > data:
-            self.__find_data(root.left, data)
-        else:
-            self.__find_data(root.right, data)
+    def __find_data(self, root: Node, data: int) -> Node | None:
+        tmp_node = root
+        while tmp_node is not None:
+            if tmp_node.data == data:
+                return tmp_node
+            elif tmp_node.data > data:
+                tmp_node = tmp_node.left
+            else:
+                tmp_node = tmp_node.right
+        return None
 
     def find(self, data) -> Node | None:
-        node = self.__find_data(self.root, data)
-        if node is not None:
-            print(f'data: {data} has found')
-        else:
-            print(f'data: {data} has not found')
-        return node
+        return self.__find_data(self.root, data)
 
     def __left_rotate(self, node: Node):
         right_node = node.right

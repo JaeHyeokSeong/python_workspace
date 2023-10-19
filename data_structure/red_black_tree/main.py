@@ -23,3 +23,22 @@ class RedBlackTreeTest(TestCase):
         self.assertEqual(actual_result_data, expected_result_data)
         self.assertEqual(actual_result_color, expected_result_color)
 
+    def test_exist_search(self):
+        data = [8, 7, 9, 3, 6, 4, 5, 12]
+        expected_data = 6
+
+        for d in data:
+            self.rbt.insert(d)
+        actual_data_node = self.rbt.find(expected_data)
+
+        self.assertEqual(actual_data_node.data, expected_data)
+
+    def test_not_exist_search(self):
+        data = [8, 7, 9, 3, 6, 4, 5, 12]
+        expected_data = 10
+
+        for d in data:
+            self.rbt.insert(d)
+        actual_data_node = self.rbt.find(expected_data)
+
+        self.assertEqual(actual_data_node, None)
