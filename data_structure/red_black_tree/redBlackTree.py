@@ -141,3 +141,81 @@ class RedBlackTree:
                         self.__right_rotate(parent_node)
                         node.color, grandparent_node.color = grandparent_node.color, node.color
                         self.__left_rotate(grandparent_node)
+
+    def remove(self, data):
+        pass
+
+    def __get_remove_node(self, node: Node | None, data: int):
+        if node is None:
+            return None
+        elif node.data > data:
+            return self.__get_remove_node(node.left, data)
+        elif node.data < data:
+            return self.__get_remove_node(node.right, data)
+        else:
+            left_node, right_node = node.left, node.right
+            if left_node is not None and right_node is not None:
+                min_node = self.find_min_node(node.right)
+                node.data, min_node.data = min_node.data, node.data
+                return min_node
+            else:
+                return node
+
+    def __remove_node(self, remove_node: Node):
+        child_node = sibling_node = None
+        parent_node = remove_node.parent
+
+        # 자식이 어디에 위치해 있는지 확인하기
+        if remove_node.left is not None:
+            child_node = remove_node.left
+        elif remove_node.right is not None:
+            child_node = remove_node.right
+
+        # 만약에 parent_node 가 None 이라는 의미는 총 노드의 수가 하나만 있다는
+        # 의미이다.
+        if parent_node is None:
+            self.root = None
+            return
+        elif remove_node is parent_node.left:
+            sibling_node = parent_node.right
+        elif remove_node is parent_node.right:
+            sibling_node = parent_node.left
+
+        if child_node is None:
+            # 임시 객체 만들기
+            child_node = Node(None)
+            child_node.parent = remove_node
+            child_node.color = 'Black'
+
+        if remove_node.color == 'Red' or child_node.color == 'Red':
+            if child_node.data is not None:
+                child_node.parent = parent_node
+                child_node.color = 'Black'
+                if parent_node.left is remove_node:
+                    parent_node.left = child_node
+                else:
+                    parent_node.right = child_node
+            else:
+                if parent_node.left is remove_node:
+                    parent_node.left = None
+                else:
+                    parent_node.right = None
+        elif remove_node.color == 'Black' and child_node.color == 'Black':
+            child_node.parent = parent_node
+            if remove_node is parent_node.left:
+                if child_node.data is None:
+                    parent_node.left = None
+                else:
+                    parent_node.left = child_node
+            elif remove_node is parent_node.right:
+                if child_node.data is None:
+                    parent_node.right = None
+                else:
+                    parent_node.left = child_node
+
+    def find_min_node(self, node: Node) -> Node | None:
+        if node is None:
+            return None
+        while node.left is not None:
+            node = node.left
+        return node
