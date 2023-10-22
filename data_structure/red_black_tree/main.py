@@ -10,7 +10,7 @@ class RedBlackTreeTest(TestCase):
     def setUp(self) -> None:
         self.rbt = RedBlackTree()
 
-    def test_insert(self):
+    def test_insert_basic(self):
         data = [8, 7, 9, 3, 6, 4, 5, 12]
         expected_result_data = [3, 4, 5, 6, 7, 8, 9, 12]
         expected_result_color = ['Red', 'Black', 'Red', 'Red', 'Black', 'Black', 'Black', 'Red']
@@ -67,3 +67,38 @@ class RedBlackTreeTest(TestCase):
         actual_data_node = self.rbt.find_min_node(self.rbt.root)
 
         self.assertEqual(actual_data_node.data, expected_data)
+
+    def test_remove_node_located_in_root_node_with_size1(self):
+        data = 10
+        expected_data = None
+        expected_root_status = None
+        expected_result_data = []
+
+        self.rbt.insert(data)
+        self.rbt.remove(data)
+
+        self.assertEqual(self.rbt.find(data), expected_data)
+        self.assertEqual(self.rbt.root, expected_root_status)
+        self.assertEqual(self.rbt.inorder_traversal_data(),
+                         expected_result_data)
+
+    def test_remove_node_located_in_root_node_with_size2(self):
+        data = [10, 20]
+        remove_data = 10
+        expected_data = None
+        expected_root_data = 20
+        expected_root_color = 'Black'
+        expected_result_data = [20]
+        expected_result_color = ['Black']
+
+        for d in data:
+            self.rbt.insert(d)
+        self.rbt.remove(remove_data)
+
+        self.assertEqual(self.rbt.find(remove_data), expected_data)
+        self.assertEqual(self.rbt.root.data, expected_root_data)
+        self.assertEqual(self.rbt.root.color, expected_root_color)
+        self.assertEqual(self.rbt.inorder_traversal_data(),
+                         expected_result_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(),
+                         expected_result_color)

@@ -143,7 +143,10 @@ class RedBlackTree:
                         self.__left_rotate(grandparent_node)
 
     def remove(self, data):
-        pass
+        remove_node = self.__get_remove_node(self.root, data)
+        # data has found
+        if remove_node is not None:
+            self.__remove_node(remove_node)
 
     def __get_remove_node(self, node: Node | None, data: int):
         if node is None:
@@ -162,56 +165,34 @@ class RedBlackTree:
                 return node
 
     def __remove_node(self, remove_node: Node):
-        child_node = sibling_node = None
-        parent_node = remove_node.parent
+        remove_node_color = remove_node.color
 
-        # 자식이 어디에 위치해 있는지 확인하기
-        if remove_node.left is not None:
-            child_node = remove_node.left
-        elif remove_node.right is not None:
-            child_node = remove_node.right
+        # if remove node color is red there is nothing to do
+        # however, if color is black, then we need some works to
+        # maintain red black tree properties
+        if remove_node_color == 'Black':
+            r_parent_node = remove_node.parent
+            r_sibling_node = None
 
-        # 만약에 parent_node 가 None 이라는 의미는 총 노드의 수가 하나만 있다는
-        # 의미이다.
-        if parent_node is None:
-            self.root = None
-            return
-        elif remove_node is parent_node.left:
-            sibling_node = parent_node.right
-        elif remove_node is parent_node.right:
-            sibling_node = parent_node.left
-
-        if child_node is None:
-            # 임시 객체 만들기
-            child_node = Node(None)
-            child_node.parent = remove_node
-            child_node.color = 'Black'
-
-        if remove_node.color == 'Red' or child_node.color == 'Red':
-            if child_node.data is not None:
-                child_node.parent = parent_node
-                child_node.color = 'Black'
-                if parent_node.left is remove_node:
-                    parent_node.left = child_node
+            # remove_node is located at root node
+            if r_parent_node is None:
+                # only one node is existed in red black tree
+                if remove_node.left is None and remove_node.right is None:
+                    self.root = None
+                # change child node to root node
+                # find where is the child node is it in left or right
                 else:
-                    parent_node.right = child_node
+                    r_child_node = remove_node.left
+                    if r_child_node is None:
+                        r_child_node = remove_node.right
+                    # property two: root not is always black
+                    if r_child_node.color == 'Red':
+                        r_child_node.color = 'Black'
+                    r_child_node.parent = None
+                    self.root = r_child_node
             else:
-                if parent_node.left is remove_node:
-                    parent_node.left = None
-                else:
-                    parent_node.right = None
-        elif remove_node.color == 'Black' and child_node.color == 'Black':
-            child_node.parent = parent_node
-            if remove_node is parent_node.left:
-                if child_node.data is None:
-                    parent_node.left = None
-                else:
-                    parent_node.left = child_node
-            elif remove_node is parent_node.right:
-                if child_node.data is None:
-                    parent_node.right = None
-                else:
-                    parent_node.left = child_node
+                # implement case 4
+                pass
 
     def find_min_node(self, node: Node) -> Node | None:
         if node is None:
