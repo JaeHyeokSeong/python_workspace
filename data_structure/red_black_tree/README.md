@@ -1,5 +1,10 @@
 <h1>Data Structure</h1>
-<p>Red Black Tree</p>
+    <p>Red Black Tree</p>
+<h1>How to Run</h1>
+    <ol>
+        <li>Download the project</li>
+        <li>type: python3 -m unittest -v main.py</li>
+    </ol>
 <h1>References</h1>
     <ul>
         <li>reference [1]: https://code-lab1.tistory.com/62 - explain theory</li>
