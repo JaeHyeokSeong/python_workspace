@@ -213,21 +213,47 @@ class RedBlackTree:
                     if r_parent_node.left is remove_node:
                         r_sibling_node = r_parent_node.right
                         r_sibling_right_child = r_sibling_node.right
+                        r_sibling_left_child = r_sibling_node.left
+                        # case 4
                         if r_sibling_node.color == 'Black' and r_sibling_right_child.color == 'Red':
                             r_sibling_node.color = r_parent_node.color
                             r_sibling_right_child.color = 'Black'
                             r_parent_node.color = 'Black'
                             self.__left_rotate(r_parent_node)
+                        # case 3
+                        elif r_sibling_node.color == 'Black' and r_sibling_left_child.color == 'Red' \
+                                and r_sibling_right_child.color == 'Black':
+                            # change color left_sibling node and sibling node
+                            r_sibling_left_child.color, r_sibling_node.color = r_sibling_node.color, \
+                                r_sibling_left_child.color
+                            # right rotate for sibling node
+                            self.__right_rotate(r_sibling_node)
+                            # perform case 4
+                            r_sibling_left_child.color = r_parent_node.color
+                            r_parent_node.color = 'Black'
+                            r_sibling_node.color = 'Black'
+                            self.__left_rotate(r_parent_node)
+
                     elif r_parent_node.right is remove_node:
                         r_sibling_node = r_parent_node.left
                         r_sibling_left_child = r_sibling_node.left
+                        r_sibling_right_child = r_sibling_node.right
                         if r_sibling_node.color == 'Black' and r_sibling_left_child.color == 'Red':
                             r_sibling_node.color = r_parent_node.color
                             r_sibling_left_child.color = 'Black'
                             r_parent_node.color = 'Black'
                             self.__right_rotate(r_parent_node)
+                        elif r_sibling_node.color == 'Black' and r_sibling_right_child.color == 'Red' \
+                                and r_sibling_left_child.color == 'Black':
+                            r_sibling_right_child.color, r_sibling_node.color = r_sibling_node.color, \
+                                r_sibling_right_child.color
+                            self.__left_rotate(r_sibling_node)
+                            r_sibling_right_child.color = r_parent_node.color
+                            r_parent_node.color = 'Black'
+                            r_sibling_node.color = 'Black'
+                            self.__right_rotate(r_parent_node)
 
-                # todo: implement case 3
+
 
     def find_min_node(self, node: Node) -> Node | None:
         if node is None:
