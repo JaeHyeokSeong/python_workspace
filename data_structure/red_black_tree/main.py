@@ -176,3 +176,14 @@ class RedBlackTreeTest(TestCase):
         self.assertEqual(actual_node.data, 3)
         actual_node = self.rbt.find(15)
         self.assertEqual(actual_node, None)
+
+    def test_remove_root_node(self):
+        data = [10]
+        expected_data = None
+
+        for d in data:
+            self.rbt.insert(d)
+            self.rbt.remove(d)
+
+        self.assertEqual(self.rbt.root, expected_data)
+
