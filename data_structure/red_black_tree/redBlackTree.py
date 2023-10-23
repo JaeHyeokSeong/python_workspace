@@ -146,7 +146,7 @@ class RedBlackTree:
         remove_node = self.__get_remove_node(self.root, data)
         # data has found
         if remove_node is not None:
-            self.__remove_node(remove_node)
+            self.__remove_node(remove_node, True)
 
     def __get_remove_node(self, node: Node | None, data: int):
         if node is None:
@@ -164,7 +164,7 @@ class RedBlackTree:
             else:
                 return node
 
-    def __remove_node(self, remove_node: Node):
+    def __remove_node(self, remove_node: Node, status: bool):
         remove_node_color = remove_node.color
 
         # if remove node color is red there is nothing to do to maintain
@@ -207,52 +207,106 @@ class RedBlackTree:
                     r_child_node = remove_node.right
 
                 # doubly black case
-                if r_child_node is None or r_child_node.color == 'Black':
+                if r_child_node is None or r_child_node.color == 'Black' or status is False:
                     # case 4
                     # find where is the sibling node
                     if r_parent_node.left is remove_node:
                         r_sibling_node = r_parent_node.right
                         r_sibling_right_child = r_sibling_node.right
                         r_sibling_left_child = r_sibling_node.left
-                        # case 4
-                        if r_sibling_node.color == 'Black' and r_sibling_right_child.color == 'Red':
-                            r_sibling_node.color = r_parent_node.color
-                            r_sibling_right_child.color = 'Black'
-                            r_parent_node.color = 'Black'
-                            self.__left_rotate(r_parent_node)
-                        # case 3
-                        elif r_sibling_node.color == 'Black' and r_sibling_left_child.color == 'Red' \
-                                and r_sibling_right_child.color == 'Black':
-                            # change color left_sibling node and sibling node
-                            r_sibling_left_child.color, r_sibling_node.color = r_sibling_node.color, \
-                                r_sibling_left_child.color
-                            # right rotate for sibling node
-                            self.__right_rotate(r_sibling_node)
-                            # perform case 4
-                            r_sibling_left_child.color = r_parent_node.color
-                            r_parent_node.color = 'Black'
-                            r_sibling_node.color = 'Black'
-                            self.__left_rotate(r_parent_node)
 
+                        if status is True:
+                            # remove remove_node (remove node)
+                            r_parent_node.left = r_child_node
+                            if r_child_node is not None:
+                                r_child_node.parent = r_parent_node
+
+                        # case 4
+                        if r_sibling_right_child is not None:
+                            if r_sibling_node.color == 'Black' and r_sibling_right_child.color == 'Red':
+                                r_sibling_node.color = r_parent_node.color
+                                r_sibling_right_child.color = 'Black'
+                                r_parent_node.color = 'Black'
+                                self.__left_rotate(r_parent_node)
+                                return
+                        # case 3
+                        if r_sibling_left_child is not None:
+                            if r_sibling_node.color == 'Black' and r_sibling_left_child.color == 'Red' \
+                                 and (r_sibling_right_child is None or r_sibling_right_child.color == 'Black'):
+                                # change color left_sibling node and sibling node
+                                r_sibling_left_child.color, r_sibling_node.color = r_sibling_node.color, \
+                                    r_sibling_left_child.color
+                                # right rotate for sibling node
+                                self.__right_rotate(r_sibling_node)
+                                # perform case 4
+                                r_sibling_left_child.color = r_parent_node.color
+                                r_parent_node.color = 'Black'
+                                r_sibling_node.color = 'Black'
+                                self.__left_rotate(r_parent_node)
+                                return
+                        # case 2
+                        if r_sibling_node.color == 'Black' and (r_sibling_left_child is None or r_sibling_left_child.color == 'Black') \
+                                and (r_sibling_right_child is None or r_sibling_right_child.color == 'Black'):
+                            r_sibling_node.color = 'Red'
+                            # parent color is red that means red and black case
+                            if r_parent_node.color == 'Red':
+                                r_parent_node.color = 'Black'
+                            # parent color is black that means doubly black case
+                            else:
+                                # parent node is located at root node
+                                if r_parent_node.parent is None:
+                                    r_parent_node.color = 'Black'
+                                # doubly black
+                                else:
+                                    self.__remove_node(r_parent_node, False)
+
+                    # sibling node is located in left side
                     elif r_parent_node.right is remove_node:
                         r_sibling_node = r_parent_node.left
                         r_sibling_left_child = r_sibling_node.left
                         r_sibling_right_child = r_sibling_node.right
-                        if r_sibling_node.color == 'Black' and r_sibling_left_child.color == 'Red':
-                            r_sibling_node.color = r_parent_node.color
-                            r_sibling_left_child.color = 'Black'
-                            r_parent_node.color = 'Black'
-                            self.__right_rotate(r_parent_node)
-                        elif r_sibling_node.color == 'Black' and r_sibling_right_child.color == 'Red' \
-                                and r_sibling_left_child.color == 'Black':
-                            r_sibling_right_child.color, r_sibling_node.color = r_sibling_node.color, \
-                                r_sibling_right_child.color
-                            self.__left_rotate(r_sibling_node)
-                            r_sibling_right_child.color = r_parent_node.color
-                            r_parent_node.color = 'Black'
-                            r_sibling_node.color = 'Black'
-                            self.__right_rotate(r_parent_node)
 
+                        if status is True:
+                            # remove remove_node (remove node)
+                            r_parent_node.right = r_child_node
+                            if r_child_node is not None:
+                                r_child_node.parent = r_parent_node
+
+                        # case 4
+                        if r_sibling_left_child is not None:
+                            if r_sibling_node.color == 'Black' and r_sibling_left_child.color == 'Red':
+                                r_sibling_node.color = r_parent_node.color
+                                r_sibling_left_child.color = 'Black'
+                                r_parent_node.color = 'Black'
+                                self.__right_rotate(r_parent_node)
+                                return
+                        # case 3
+                        if r_sibling_right_child is not None:
+                            if r_sibling_node.color == 'Black' and r_sibling_right_child.color == 'Red' \
+                                 and (r_sibling_left_child is None or r_sibling_left_child.color == 'Black'):
+                                r_sibling_right_child.color, r_sibling_node.color = r_sibling_node.color, \
+                                    r_sibling_right_child.color
+                                self.__left_rotate(r_sibling_node)
+                                r_sibling_right_child.color = r_parent_node.color
+                                r_parent_node.color = 'Black'
+                                r_sibling_node.color = 'Black'
+                                self.__right_rotate(r_parent_node)
+                                return
+                        # case 2
+                        if r_sibling_node.color == 'Black' and (r_sibling_left_child is None or r_sibling_left_child.color == 'Black') \
+                                and (r_sibling_right_child is None or r_sibling_right_child.color == 'Black'):
+                            r_sibling_node.color = 'Red'
+                            # parent color is red that means red and black case
+                            if r_parent_node.color == 'Red':
+                                r_parent_node.color = 'Black'
+                            # parent color is black that means doubly black case
+                            else:
+                                # parent node is located at root node
+                                if r_parent_node.parent is None:
+                                    r_parent_node.color = 'Black'
+                                # doubly black
+                                else:
+                                    self.__remove_node(r_parent_node, False)
 
 
     def find_min_node(self, node: Node) -> Node | None:
