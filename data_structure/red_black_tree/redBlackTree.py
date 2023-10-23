@@ -164,8 +164,11 @@ class RedBlackTree:
             else:
                 return node
 
-    def __remove_node(self, remove_node: Node, status: bool):
-        remove_node_color = remove_node.color
+    def __remove_node(self, remove_node: Node | None, status: bool, tmp_parent=None):
+        if remove_node is None:
+            remove_node_color = 'Black'
+        else:
+            remove_node_color = remove_node.color
 
         # if remove node color is red there is nothing to do to maintain
         # red black tree properties
@@ -179,8 +182,13 @@ class RedBlackTree:
             elif r_parent_node.right is remove_node:
                 r_parent_node.right = None
         elif remove_node_color == 'Black':
-            r_parent_node = remove_node.parent
+            r_parent_node = None
             r_sibling_node = None
+
+            if remove_node is not None:
+                r_parent_node = remove_node.parent
+            else:
+                r_parent_node = tmp_parent
 
             # remove_node is located at root node
             if r_parent_node is None:
@@ -201,10 +209,14 @@ class RedBlackTree:
             else:
                 # implement case 4
                 r_child_node = None
-                if remove_node.left is not None:
-                    r_child_node = remove_node.left
-                if remove_node.right is not None:
-                    r_child_node = remove_node.right
+
+                if remove_node is not None:
+                    if remove_node.left is not None:
+                        r_child_node = remove_node.left
+                    elif remove_node.right is not None:
+                        r_child_node = remove_node.right
+                else:
+                    r_child_node = remove_node
 
                 # doubly black case
                 if r_child_node is None or r_child_node.color == 'Black' or status is False:
@@ -259,6 +271,13 @@ class RedBlackTree:
                                 # doubly black
                                 else:
                                     self.__remove_node(r_parent_node, False)
+                            return
+                        # case 1
+                        if r_sibling_node.color == 'Red':
+                            # change parent color and sibling color
+                            r_sibling_node.color, r_parent_node.color = r_parent_node.color, r_sibling_node.color
+                            self.__left_rotate(r_parent_node)
+                            self.__remove_node(r_child_node, False, tmp_parent=r_parent_node)
 
                     # sibling node is located in left side
                     elif r_parent_node.right is remove_node:
@@ -307,7 +326,13 @@ class RedBlackTree:
                                 # doubly black
                                 else:
                                     self.__remove_node(r_parent_node, False)
-
+                            return
+                        # case 1
+                        if r_sibling_node.color == 'Red':
+                            # change parent color and sibling color
+                            r_sibling_node.color, r_parent_node.color = r_parent_node.color, r_sibling_node.color
+                            self.__right_rotate(r_parent_node)
+                            self.__remove_node(r_child_node, False, tmp_parent=r_parent_node)
 
     def find_min_node(self, node: Node) -> Node | None:
         if node is None:

@@ -119,3 +119,9 @@ class RedBlackTreeTest(TestCase):
         expected_result_color = ['Black', 'Black', 'Black']
         self.assertEqual(self.rbt.inorder_traversal_data(), expected_result_data)
         self.assertEqual(self.rbt.inorder_traversal_color(), expected_result_color)
+
+        self.rbt.remove(20)
+        expected_result_data = [40, 80]
+        expected_result_color = ['Black', 'Red']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_result_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_result_color)
