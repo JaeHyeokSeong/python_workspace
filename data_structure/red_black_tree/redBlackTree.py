@@ -217,17 +217,8 @@ class RedBlackTree:
                         r_child_node = remove_node.right
                 else:
                     r_child_node = remove_node
-                # red black case
-                if r_child_node is not None and r_child_node.color == 'Red':
-                    if r_parent_node.left is remove_node:
-                        r_parent_node.left = r_child_node
-                        r_child_node.parent = r_parent_node
-                    else:
-                        r_parent_node.right = r_child_node
-                        r_child_node.parent = r_parent_node
-                    r_child_node.color = 'Black'
                 # doubly black case
-                elif r_child_node is None or r_child_node.color == 'Black' or status is False:
+                if r_child_node is None or r_child_node.color == 'Black' or status is False:
                     # case 4
                     # find where is the sibling node
                     if r_parent_node.left is remove_node:
@@ -341,6 +332,15 @@ class RedBlackTree:
                             r_sibling_node.color, r_parent_node.color = r_parent_node.color, r_sibling_node.color
                             self.__right_rotate(r_parent_node)
                             self.__remove_node(r_child_node, False, tmp_parent=r_parent_node)
+                # red and black case
+                elif r_child_node is not None and r_child_node.color == 'Red':
+                    if r_parent_node.left is remove_node:
+                        r_parent_node.left = r_child_node
+                        r_child_node.parent = r_parent_node
+                    else:
+                        r_parent_node.right = r_child_node
+                        r_child_node.parent = r_parent_node
+                    r_child_node.color = 'Black'
 
     def find_min_node(self, node: Node) -> Node | None:
         if node is None:
