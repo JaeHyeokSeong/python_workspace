@@ -1,6 +1,9 @@
 # reference [1]: https://code-lab1.tistory.com/62 - 이론 설명
-# reference [2]: https://8iggy.tistory.com/188 - 구현
-# reference [3]: https://www.daleseo.com/python-unittest-testcase/ - unittest 설명
+# reference [2]: https://www.youtube.com/watch?v=2MdsebfJOyM - video1
+# reference [3]: https://www.youtube.com/watch?v=6drLl777k-E&t=1 - video2
+# reference [4]: https://8iggy.tistory.com/188 - 구현
+# reference [5]: https://www.daleseo.com/python-unittest-testcase/ - unittest 설명
+
 from redBlackTree import RedBlackTree
 from node import Node
 from unittest import TestCase
