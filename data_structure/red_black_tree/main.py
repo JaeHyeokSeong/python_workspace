@@ -125,3 +125,54 @@ class RedBlackTreeTest(TestCase):
         expected_result_color = ['Black', 'Red']
         self.assertEqual(self.rbt.inorder_traversal_data(), expected_result_data)
         self.assertEqual(self.rbt.inorder_traversal_color(), expected_result_color)
+
+    def test_remove_example(self):
+        data = [10, 5, 20, 3, 7, 15, 25, 1, 4]
+        expected_data = [1, 3, 4, 5, 7, 10, 15, 20, 25]
+        expected_color = ['Red', 'Black', 'Red', 'Red', 'Black', 'Black', 'Red', 'Black', 'Red']
+        for d in data:
+            self.rbt.insert(d)
+
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        self.rbt.remove(5)
+        expected_data = [1, 3, 4, 7, 10, 15, 20, 25]
+        expected_color = ['Black', 'Red', 'Red', 'Black', 'Black', 'Red', 'Black', 'Red']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        self.rbt.remove(7)
+        expected_data = [1, 3, 4, 10, 15, 20, 25]
+        expected_color = ['Black', 'Red', 'Black', 'Black', 'Red', 'Black', 'Red']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        self.rbt.remove(10)
+        expected_data = [1, 3, 4, 15, 20, 25]
+        expected_color = ['Black', 'Red', 'Black', 'Black', 'Black', 'Red']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        self.rbt.remove(20)
+        expected_data = [1, 3, 4, 15, 25]
+        expected_color = ['Black', 'Red', 'Black', 'Black', 'Black']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        self.rbt.remove(25)
+        expected_data = [1, 3, 4, 15]
+        expected_color = ['Black', 'Black', 'Red', 'Black']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        self.rbt.remove(15)
+        expected_data = [1, 3, 4]
+        expected_color = ['Black', 'Black', 'Black']
+        self.assertEqual(self.rbt.inorder_traversal_data(), expected_data)
+        self.assertEqual(self.rbt.inorder_traversal_color(), expected_color)
+
+        actual_node = self.rbt.find(3)
+        self.assertEqual(actual_node.data, 3)
+        actual_node = self.rbt.find(15)
+        self.assertEqual(actual_node, None)

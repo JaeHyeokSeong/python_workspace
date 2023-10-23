@@ -213,13 +213,21 @@ class RedBlackTree:
                 if remove_node is not None:
                     if remove_node.left is not None:
                         r_child_node = remove_node.left
-                    elif remove_node.right is not None:
+                    if remove_node.right is not None:
                         r_child_node = remove_node.right
                 else:
                     r_child_node = remove_node
-
+                # red black case
+                if r_child_node is not None and r_child_node.color == 'Red':
+                    if r_parent_node.left is remove_node:
+                        r_parent_node.left = r_child_node
+                        r_child_node.parent = r_parent_node
+                    else:
+                        r_parent_node.right = r_child_node
+                        r_child_node.parent = r_parent_node
+                    r_child_node.color = 'Black'
                 # doubly black case
-                if r_child_node is None or r_child_node.color == 'Black' or status is False:
+                elif r_child_node is None or r_child_node.color == 'Black' or status is False:
                     # case 4
                     # find where is the sibling node
                     if r_parent_node.left is remove_node:
