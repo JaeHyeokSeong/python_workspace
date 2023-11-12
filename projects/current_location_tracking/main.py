@@ -22,7 +22,7 @@ def get_current_location():
 
 
 def get_address(latitude, longitude):
-    geo = Nominatim(user_agent='my_pro')
+    geo = Nominatim(user_agent='South Korea')
     address_coordinate = f'{latitude}, {longitude}'
     return geo.reverse(address_coordinate)
 
