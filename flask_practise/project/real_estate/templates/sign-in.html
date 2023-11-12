@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign in</title>
+    <title>회원 가입</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign-in_style.css') }}">
 </head>
 <body>
-    <p>Sign in</p>
+    <h2>로그인</h2>
+    {% if sign_in_fail == 'True' %}
+        <script>
+            alert('로그인에 실패하였습니다');
+        </script>
+    {% endif %}
     <form action="{{ url_for('login.sign_in') }}" method="post">
-        <input type="email" name="username" placeholder="Email address" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Sign in</button>
+        <input type="email" name="username" placeholder="이메일" required>
+        <input type="password" name="password" placeholder="비밀 번호" required>
+        <button type="submit">로그인</button>
     </form>
 </body>
 </html>

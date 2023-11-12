@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Join</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/join_style.css') }}">
+</head>
+<body>
+    {% if duplicate_join == 'True' %}
+    <script>
+        alert('이미 사용중인 username 입니다.')
+    </script>
+    {% endif %}
+
+    <h2>회원 가입</h2>
+    <form action="{{ url_for('login.join') }}" method="post">
+        <input type="email" name="username" placeholder="이메일" required>
+        <input type="password" name="password" placeholder="비밀 번호" required>
+        <button type="submit">가입</button>
+    </form>
+</body>
+</html>

@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Real Estate Page</title>
+    <title>쉬운 부동산</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
 </head>
 <body>
-    <h1>Real Estate</h1>
+    <h1>부동산</h1>
     {% if 'username' not in session %}
-        <button type="button" onclick="window.open('/sign-in/')">Sign in</button>
-        <button>Join</button>
+        <button type="button" onclick="window.open('/sign-in/')">로그인</button>
+        <button type="button" onclick="window.open('/join/')">회원 가입</button>
     {% elif 'username' in session %}
         <form action="{{ url_for('login.sign_out') }}" method="post">
-            <button type="submit">Sign out</button>
+            <button type="submit">로그 아웃</button>
         </form>
     {% endif %}
 </body>
