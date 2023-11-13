@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block title %}
+    <title>학교 개시판 - 강의 평가</title>
+{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course_evaluation.css') }}">
+{% endblock %}
+{% block content %}
+    <form action="{{ url_for('ce.search') }}" method="get">
+        <input type="text" name="course_evaluation_search" placeholder="내용을 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+
+    {% for ce in ce_list %}
+        <p>{{ ce }}</p>
+    {% endfor %}
+{% endblock %}

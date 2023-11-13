@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>학교 개시판</title>
+    {% endblock %}
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar_uni_name">
+            <a href="{{ url_for('index') }}">대학교 이름</a>
+        </div>
+        <ul class="navbar_menu">
+            <li><a href="">시간표</a></li>
+            <li><a href="{{ url_for('ce.course_evaluation') }}">강의 평가</a></li>
+            <li><a href="">자유 개시판</a></li>
+        </ul>
+        <ul class="navbar_login">
+            <li><a href="">로그인</a></li>
+            <li><a href="">회원 가입</a></li>
+        </ul>
+
+        <a href="javascript:void(0)" class="navbar_toggleButton">목록</a>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
