@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% block title %}
+    <title>학교 개시판 - 강의 평가 등록하기</title>
+{% endblock %}
+{% block content %}
+    <form action="{{ url_for('ce.add') }}" method="post">
+        <input type="text" name="course_number" placeholder="수강 번호">
+        <input type="text" name="course_name" placeholder="수강 제목">
+        <input type="text" name="course_coordinate_name" placeholder="담당 교수">
+        <textarea name="course_review" cols="30" rows="10" placeholder="리뷰"></textarea>
+        <button type="submit">등록하기</button>
+    </form>
+{% endblock %}

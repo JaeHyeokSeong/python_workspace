@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 
 ce = Blueprint('ce', __name__, url_prefix='/course_evaluation')
 
@@ -27,5 +27,8 @@ def add():
         course_name = request.form['course_name']
         course_coordinate_name = request.form['course_coordinate_name']
         course_review = request.form['course_review']
+
+        print(course_number, course_name, course_coordinate_name, course_review)
+        return redirect(url_for('ce.course_evaluation'))
     else:
-        return
+        return render_template('course_evaluation_add.html')

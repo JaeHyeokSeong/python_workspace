@@ -10,7 +10,7 @@
         <input type="text" name="course_evaluation_search" placeholder="내용을 입력하세요">
         <button type="submit">검색</button>
     </form>
-
+    <a href="{{ url_for('ce.add') }}"><button type="button">등록하기</button></a>
     {% for ce in ce_list %}
         <p>{{ ce }}</p>
     {% endfor %}
