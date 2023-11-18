@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport">
     {% block title %}
         <title>학교 개시판</title>
     {% endblock %}
     {% block stylesheet %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
     {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
 </head>
 <body>
     <nav class="navbar">

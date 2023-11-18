@@ -1,88 +1,30 @@
-body {
-    font-family: Arial;
-    margin: 0;
-}
 
-.navbar {
+.ce_control {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(22, 22, 23, .8);
-    padding: 8px 12px;
+    justify-content: center;
 }
 
-.navbar a {
-    text-decoration: none;
-    color: white;
+.search_bar {
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
 }
 
-.navbar_uni_name {
-    font-size: 26px;
+#ce_search_input {
+    width: 300px;
+    height: 30px;
 }
 
-.navbar_menu {
-    display: flex;
-    list-style: none;
-    padding-left: 0;
+#ce_search_button {
+    width: 56px;
+    height: 37px;
 }
 
-.navbar_menu li {
-    padding: 8px 30px;
+.add_bar {
+    padding-top: 1rem;
+    margin-top: 1rem;
 }
 
-.navbar_menu li:hover {
-    transform: scale(1.5);
-    transition-duration: 0.7s;
-}
-
-.navbar_login {
-    list-style: none;
-    display: flex;
-    padding-left: 0;
-}
-
-.navbar_login li {
-    padding: 8px 10px;
-}
-
-.navbar_toggleButton {
-    display: none;
-    position: absolute;
-    right: 32px;
-    font-size: 24px;
-}
-
-@media screen and (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 8px 24px;
-    }
-
-    .navbar_menu {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-    .navbar_menu li {
-        width: 100%;
-        text-align: center;
-    }
-
-    .navbar_login {
-        display: none;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .navbar_toggleButton {
-        display: block;
-    }
-
-    .navbar_menu.active,
-    .navbar_login.active {
-        display: flex;
-    }
+#ce_add_button {
+    height: 37px;
 }

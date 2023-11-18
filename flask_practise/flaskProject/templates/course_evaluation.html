@@ -5,12 +5,20 @@
 {% block stylesheet %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/course_evaluation.css') }}">
 {% endblock %}
+
 {% block content %}
-    <form action="{{ url_for('ce.search') }}" method="get">
-        <input type="text" name="course_evaluation_search" placeholder="내용을 입력하세요">
-        <button type="submit">검색</button>
-    </form>
-    <a href="{{ url_for('ce.add') }}"><button type="button">등록하기</button></a>
+    <div class="ce_control">
+        <div class="search_bar">
+            <form action="{{ url_for('ce.search') }}" method="get">
+            <input id="ce_search_input" type="text" name="course_evaluation_search" placeholder="내용을 입력하세요">
+            <button id="ce_search_button" type="submit">검색</button>
+            </form>
+        </div>
+        <div class="add_bar">
+            <a href="{{ url_for('ce.add') }}"><button id="ce_add_button" type="button">등록하기</button></a>
+        </div>
+    </div>
+
     {% for ce in ce_list %}
         <p>{{ ce }}</p>
     {% endfor %}
