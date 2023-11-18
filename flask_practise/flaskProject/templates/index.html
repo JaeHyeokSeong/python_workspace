@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport">
     {% block title %}
-        <title>학교 개시판</title>
+        <title>학교 게시판</title>
     {% endblock %}
     {% block stylesheet %}
     {% endblock %}
@@ -21,8 +21,8 @@
             <li><a href="">자유 개시판</a></li>
         </ul>
         <ul class="navbar_login">
-            <li><a href="">로그인</a></li>
-            <li><a href="">회원 가입</a></li>
+            <li><a href="{{ url_for('ac.sign_in') }}" target="_blank">로그인</a></li>
+            <li><a href="{{ url_for('ac.create_account') }}" target="_blank">회원 가입</a></li>
         </ul>
 
         <a href="javascript:void(0)" class="navbar_toggleButton">목록</a>

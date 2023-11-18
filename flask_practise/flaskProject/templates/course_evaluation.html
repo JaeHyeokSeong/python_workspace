@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% block title %}
-    <title>학교 개시판 - 강의 평가</title>
+    <title>학교 게시판 - 강의 평가</title>
 {% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/course_evaluation.css') }}">
@@ -18,7 +18,10 @@
             <a href="{{ url_for('ce.add') }}"><button id="ce_add_button" type="button">등록하기</button></a>
         </div>
     </div>
-
+    <!-- 등록된 개시물이 없는 경우 -->
+    {% if not ce_list %}
+        <p id="ce_empty">등록된 강의평가가 없습니다.</p>
+    {% endif %}
     {% for ce in ce_list %}
         <p>{{ ce }}</p>
     {% endfor %}

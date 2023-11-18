@@ -29,3 +29,9 @@
 #ce_add_button {
     height: 37px;
 }
+
+#ce_empty {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
