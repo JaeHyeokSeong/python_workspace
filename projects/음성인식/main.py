@@ -6,7 +6,7 @@ if __name__ == '__main__':
     with sr.Microphone() as source:
         print('지금 말해주세요:')
         # 총 4초 동안 음성을 인식 합니다.
-        speech = recognizer.listen(source, phrase_time_limit=7)
+        speech = recognizer.listen(source, phrase_time_limit=4)
 
     try:
         audio = recognizer.recognize_google(speech, language='ko')
